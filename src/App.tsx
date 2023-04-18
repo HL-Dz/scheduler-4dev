@@ -1,11 +1,13 @@
-import { Routes, Route, Link } from "react-router-dom";
-import Auth from "./pages/Auth";
+import { Routes, Route } from "react-router-dom";
+import AuthPage from "./pages/AuthPage";
+import ErrorPage from "./pages/ErrorPage";
 
 function App() {
   return (
     <div className="App">
       <Routes>
-        <Route path="/" element={<Auth />} />
+        <Route path="/" element={<AuthPage />} />
+        <Route path="/error" element={<ErrorPage />} />
       </Routes>
     </div>
   );
