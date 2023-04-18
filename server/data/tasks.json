@@ -79,14 +79,5 @@
     "description": "Translate website content to multiple languages",
     "schedule": { "creation_time": "2021-07-31T11:45:00" },
     "author_name": "Ryan Garcia"
-  },
-  {
-    "id": "9b29e20e-da5a-406a-ad27-1f8f656a4b49",
-    "status": 1,
-    "priority": 2,
-    "title": "web developer",
-    "description": "Here will be some description",
-    "author_name": "lorem ipsum...",
-    "schedule": { "creation_time": "2021-08-01T13:13:00" }
   }
 ]
