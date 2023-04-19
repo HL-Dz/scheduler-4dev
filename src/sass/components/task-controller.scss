@@ -71,8 +71,18 @@
         border: 3px solid #e04c4c;
       }
     }
+    .task__title {
+      font-weight: 600;
+      color: $title-color;
+      @include media($mobile) {
+        font-weight: 500;
+      }
+    }
   }
   .task__executor {
     padding: 10px 5px;
+    font-family: "Open Sans";
+    font-size: 14px;
+    color: rgb(109, 109, 109);
   }
 }

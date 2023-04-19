@@ -32,10 +32,16 @@
         margin-bottom: 60px;
         text-align: justify;
         color: rgb(126, 126, 126);
+        @include media($mobile) {
+          margin-bottom: 60px;
+        }
       }
       .error-box__btn {
         margin-top: auto;
         width: 300px;
+        @include media($mobile) {
+          width: 100%;
+        }
       }
     }
   }

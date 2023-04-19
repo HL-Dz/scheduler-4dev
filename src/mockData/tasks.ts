@@ -1,4 +1,14 @@
-type ITask = {
+export type IStatus = {
+  value: string;
+  label: string;
+};
+
+export type IPriority = {
+  value: string;
+  label: string;
+};
+
+export type ITask = {
   id: string;
   status: number;
   priority: number;
@@ -121,5 +131,35 @@ export const tasks: ITask[] = [
       creation_time: "2021-08-01T09:15:00",
     },
     author_name: "Emma Anderson",
+  },
+];
+
+export const status: IStatus[] = [
+  {
+    label: "В очереди",
+    value: "0",
+  },
+  {
+    label: "В работе",
+    value: "1",
+  },
+  {
+    label: "Выполнено",
+    value: "2",
+  },
+];
+
+export const priority: IPriority[] = [
+  {
+    label: "Низкий",
+    value: "0",
+  },
+  {
+    label: "Средний",
+    value: "1",
+  },
+  {
+    label: "Высокий",
+    value: "2",
   },
 ];
