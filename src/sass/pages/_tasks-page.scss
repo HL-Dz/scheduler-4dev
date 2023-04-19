@@ -41,4 +41,16 @@
       }
     }
   }
+
+  .main-content {
+    height: calc(100vh - 95px);
+    .container {
+      height: 100%;
+      .tasks-box {
+        height: 100%;
+        display: flex;
+        justify-content: space-between;
+      }
+    }
+  }
 }
