@@ -1,19 +1,21 @@
 import React, { FC } from "react";
-import { tasks } from "../../../mockData/tasks";
+import { tasks } from "../../mockData/tasks";
 
 type IProps = {
   controllerStatus: 0 | 1 | 2;
+  isActive: number;
 };
 
 const statuses = ["В очереди", "В работе", "Выполнено"];
 
-const TaskController: FC<IProps> = ({ controllerStatus }) => {
+const TaskController: FC<IProps> = ({ controllerStatus, isActive }) => {
   const filterStatus = () => {
     return tasks.filter((el) => el.status === controllerStatus);
   };
 
+  const cls = controllerStatus === isActive ? "task-controller_active" : "";
   return (
-    <div className="task-controller">
+    <div className={"task-controller " + cls}>
       <div className="task-controller__title">{statuses[controllerStatus]}</div>
       <ul className="task-list">
         {filterStatus().map((el) => {

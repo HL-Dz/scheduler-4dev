@@ -44,12 +44,60 @@
 
   .main-content {
     height: calc(100vh - 95px);
+
+    @include media($tablet) {
+      height: calc(100vh - 140px);
+    }
     .container {
       height: 100%;
       .tasks-box {
         height: 100%;
         display: flex;
         justify-content: space-between;
+        @include media($tablet) {
+        }
+
+        .controller-navigation {
+          display: none;
+          width: 100%;
+          position: fixed;
+          bottom: 0;
+          left: 0;
+          right: 0;
+          height: 50px;
+          z-index: 2;
+
+          @include media($tablet) {
+            display: flex;
+          }
+          .item {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100%;
+            width: 100%;
+            color: white;
+            background-color: rgb(56, 56, 56);
+            cursor: pointer;
+            transition: all 0.4s ease;
+            &_active {
+              background-color: rgb(82, 82, 82);
+              font-weight: bold;
+            }
+
+            &__text {
+              font-size: 12px;
+              margin-right: 5px;
+              text-transform: uppercase;
+              @include media($mobile) {
+                display: none;
+              }
+            }
+            & span {
+              font-size: 23px;
+            }
+          }
+        }
       }
     }
   }

@@ -2,3 +2,14 @@
   display: flex;
   align-items: center;
 }
+
+$mobile: 480px;
+$tablet: 768px;
+$laptop: 992px;
+$large: 1200px;
+
+@mixin media($breakpoint) {
+  @media screen and (max-width: $breakpoint) {
+    @content;
+  }
+}
