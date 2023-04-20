@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import { ITask } from "../../mockData/tasks";
 import { useAppDispatch } from "../../hooks/hooks";
-import { addSelectedTask } from "../../store/tasksSlice";
+import { addSelectedTask, setModalType } from "../../store/tasksSlice";
 
 type IProps = {
   controllerStatus: 0 | 1 | 2;
@@ -12,11 +12,14 @@ type IProps = {
 const statuses = ["В очереди", "В работе", "Выполнено"];
 
 const TaskController: FC<IProps> = ({ controllerStatus, isActive, tasks }) => {
+  const dispatch = useAppDispatch();
   const filterStatus = () => {
     return tasks.filter((el) => el.status === controllerStatus);
   };
 
-  const dispath = useAppDispatch();
+  // const showModal = () => {
+  //   dispatch(setModalType("update_task"));
+  // };
 
   const cls = controllerStatus === isActive ? "task-controller_active" : "";
   return (
@@ -34,7 +37,11 @@ const TaskController: FC<IProps> = ({ controllerStatus, isActive, tasks }) => {
             <li
               className="task"
               key={el.id}
-              onClick={() => dispath(addSelectedTask(el))}
+              onClick={() => {
+                console.log(el);
+                dispatch(setModalType("update_task"));
+                dispatch(addSelectedTask(el));
+              }}
             >
               <div className="task__header">
                 <div className={"task__priority " + cls}></div>

@@ -4,11 +4,13 @@ import ControllerNavigaion from "../components/ControllerNavigaion/ControllerNav
 import TaskHeader from "../components/TaskHeader/TaskHeader";
 import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 import { getTasks } from "../store/tasksSlice";
+import ModalController from "../components/Modal/ModalController";
 
 const TasksPage = () => {
   const [isActive, setIsActive] = useState(0);
   const tasks = useAppSelector((state) => state.tasks.list);
   const selectedTask = useAppSelector((state) => state.tasks.selectedTask);
+  const modalType = useAppSelector((state) => state.tasks.modalType);
   const dispath = useAppDispatch();
 
   useEffect(() => {
@@ -48,6 +50,7 @@ const TasksPage = () => {
           </div>
         </div>
       </main>
+      <ModalController />
     </div>
   );
 };

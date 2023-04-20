@@ -18,6 +18,7 @@ export type TasksState = {
   error: string | null;
   loading: boolean;
   selectedTask: ITask | null;
+  modalType: "new_task" | "update_task" | null;
 };
 
 const initialState: TasksState = {
@@ -25,6 +26,7 @@ const initialState: TasksState = {
   error: null,
   loading: false,
   selectedTask: null,
+  modalType: null,
 };
 
 export const getTasks = createAsyncThunk(
@@ -78,8 +80,11 @@ const taskSlice = createSlice({
     addSelectedTask(state, action) {
       state.selectedTask = action.payload;
     },
-    resetSelectedField(state, action) {
+    resetSelectedTask(state) {
       state.selectedTask = null;
+    },
+    setModalType(state, action) {
+      state.modalType = action.payload;
     },
   },
   extraReducers: (builder) => {
@@ -95,7 +100,7 @@ const taskSlice = createSlice({
   },
 });
 
-export const { addSelectedTask, resetSelectedField, addNewTask } =
+export const { addSelectedTask, resetSelectedTask, addNewTask, setModalType } =
   taskSlice.actions;
 
 export default taskSlice.reducer;

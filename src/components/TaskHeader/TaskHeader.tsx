@@ -7,27 +7,12 @@ import TextAreaControl from "../FormControllers/TextAreaControl";
 import { priority, status } from "../../mockData/tasks";
 import moment from "moment";
 import { useAppDispatch } from "../../hooks/hooks";
-import { createTask } from "../../store/tasksSlice";
+import { setModalType } from "../../store/tasksSlice";
 
 const TaskHeader = () => {
   const dispatch = useAppDispatch();
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const showModal = () => {
-    setIsModalOpen(true);
-  };
-  const handleCancel = () => {
-    setIsModalOpen(false);
-    form.resetFields();
-  };
-
-  const [form] = Form.useForm();
-
-  const onFinish = (values: any) => {
-    let time = moment();
-    values["creation_time"] = time.format("YYYY-MM-DDThh:mm:ss");
-    // @ts-ignore
-    dispatch(createTask(values));
-    handleCancel();
+  const showNewModal = () => {
+    dispatch(setModalType("new_task"));
   };
   return (
     <>
@@ -45,7 +30,7 @@ const TaskHeader = () => {
                   }}
                   size="large"
                   icon={<PlusCircleOutlined />}
-                  onClick={showModal}
+                  onClick={showNewModal}
                 >
                   Новая задача
                 </Button>
@@ -59,125 +44,6 @@ const TaskHeader = () => {
           </div>
         </div>
       </div>
-      <Modal
-        title="Новая задача"
-        open={isModalOpen}
-        width={450}
-        footer={null}
-        onCancel={handleCancel}
-      >
-        <Form
-          name="new_task_form"
-          className="login-form"
-          initialValues={{ remember: true }}
-          onFinish={onFinish}
-          form={form}
-        >
-          <Form.Item
-            name="title"
-            rules={[{ required: true, message: "Введите имя!" }]}
-          >
-            <>
-              <span>Название</span>
-              <Input
-                placeholder="Название"
-                size="middle"
-                onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                  form.setFieldValue("title", e.target.value);
-                  form.validateFields();
-                }}
-              />
-            </>
-          </Form.Item>
-          <Form.Item
-            name="author_name"
-            rules={[{ required: true, message: "Назначьте исполнителя" }]}
-          >
-            <>
-              <span>Исполниель</span>
-              <SelectControl
-                options={duplAuthors}
-                selectType="authors"
-                placeholder="Выберите исполнителя"
-                setField={(value) => {
-                  form.setFieldValue("author_name", value);
-                  form.validateFields();
-                }}
-              />
-            </>
-          </Form.Item>
-          <Form.Item
-            name="description"
-            rules={[{ required: true, message: "Опишите задание" }]}
-          >
-            <>
-              <span>Описание задачи</span>
-              <TextAreaControl
-                placeholder="Опишите задачу"
-                setField={(value) => {
-                  form.setFieldValue("description", value);
-                  form.validateFields();
-                }}
-              />
-            </>
-          </Form.Item>
-          <Form.Item
-            name="status"
-            rules={[{ required: true, message: "Опишите состояние" }]}
-          >
-            <>
-              <span>Состяние</span>
-              <SelectControl
-                options={status}
-                selectType="state"
-                placeholder="Назначьте статус"
-                setField={(value) => {
-                  form.setFieldValue("status", value);
-                  form.validateFields();
-                }}
-              />
-            </>
-          </Form.Item>
-          <Form.Item
-            name="priority"
-            rules={[{ required: true, message: "Назначьте приоритет" }]}
-          >
-            <>
-              <span>Приоритет</span>
-              <SelectControl
-                options={priority}
-                selectType="priority"
-                placeholder="Назначить приоритет"
-                setField={(value) => {
-                  form.setFieldValue("priority", value);
-                  form.validateFields();
-                }}
-              />
-            </>
-          </Form.Item>
-          <Form.Item>
-            <div style={{ display: "flex", justifyContent: "flex-end" }}>
-              <Button
-                type="default"
-                className="login-form-button"
-                size="middle"
-                onClick={handleCancel}
-              >
-                Отмена
-              </Button>
-              <Button
-                type="primary"
-                htmlType="submit"
-                className="login-form-button"
-                size="middle"
-                style={{ marginLeft: "20px" }}
-              >
-                Сохранить
-              </Button>
-            </div>
-          </Form.Item>
-        </Form>
-      </Modal>
     </>
   );
 };
