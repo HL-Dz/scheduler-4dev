@@ -1,10 +1,25 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import TaskController from "../components/TaskController/TaskController";
 import ControllerNavigaion from "../components/ControllerNavigaion/ControllerNavigaion";
 import TaskHeader from "../components/TaskHeader/TaskHeader";
+import { useAppDispatch, useAppSelector } from "../hooks/hooks";
+import { getTasks } from "../store/tasksSlice";
 
 const TasksPage = () => {
   const [isActive, setIsActive] = useState(0);
+  const tasks = useAppSelector((state) => state.tasks.list);
+  const selectedTask = useAppSelector((state) => state.tasks.selectedTask);
+  const dispath = useAppDispatch();
+
+  useEffect(() => {
+    // console.log(selectedTask);
+    // let newDate = new Date();
+    // console.log(newDate.getTime());
+    // console.log(newDate.toISOString());
+    // console.log(newDate.toString());
+    dispath(getTasks());
+  }, [tasks]);
+
   return (
     <div className="tasks-page">
       <TaskHeader />
@@ -15,9 +30,21 @@ const TasksPage = () => {
               isActive={isActive}
               setIsActive={setIsActive}
             />
-            <TaskController controllerStatus={0} isActive={isActive} />
-            <TaskController controllerStatus={1} isActive={isActive} />
-            <TaskController controllerStatus={2} isActive={isActive} />
+            <TaskController
+              tasks={tasks}
+              controllerStatus={0}
+              isActive={isActive}
+            />
+            <TaskController
+              tasks={tasks}
+              controllerStatus={1}
+              isActive={isActive}
+            />
+            <TaskController
+              tasks={tasks}
+              controllerStatus={2}
+              isActive={isActive}
+            />
           </div>
         </div>
       </main>

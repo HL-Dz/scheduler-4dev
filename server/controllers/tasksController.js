@@ -12,14 +12,8 @@ class TasksController {
   }
   async createTask(req, res) {
     if (!req.body) return res.status(400).send({ message: "Пустой объект" });
-    let {
-      status,
-      priority,
-      title,
-      description,
-      author_name,
-      schedule: { creation_time },
-    } = req.body;
+    let { status, priority, title, description, author_name, creation_time } =
+      req.body;
     let task = {
       id: uuidv4(),
       status,

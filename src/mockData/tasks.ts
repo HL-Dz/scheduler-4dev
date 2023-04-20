@@ -1,10 +1,10 @@
 export type IStatus = {
-  value: string;
+  value: number;
   label: string;
 };
 
 export type IPriority = {
-  value: string;
+  value: number;
   label: string;
 };
 
@@ -137,29 +137,29 @@ export const tasks: ITask[] = [
 export const status: IStatus[] = [
   {
     label: "В очереди",
-    value: "0",
+    value: 0,
   },
   {
     label: "В работе",
-    value: "1",
+    value: 1,
   },
   {
     label: "Выполнено",
-    value: "2",
+    value: 2,
   },
 ];
 
 export const priority: IPriority[] = [
   {
     label: "Низкий",
-    value: "0",
+    value: 0,
   },
   {
     label: "Средний",
-    value: "1",
+    value: 1,
   },
   {
     label: "Высокий",
-    value: "2",
+    value: 2,
   },
 ];

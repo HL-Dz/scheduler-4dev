@@ -5,8 +5,12 @@ import SelectControl from "../FormControllers/SelectControl";
 import { authors, duplAuthors } from "../../mockData/authors";
 import TextAreaControl from "../FormControllers/TextAreaControl";
 import { priority, status } from "../../mockData/tasks";
+import moment from "moment";
+import { useAppDispatch } from "../../hooks/hooks";
+import { createTask } from "../../store/tasksSlice";
 
 const TaskHeader = () => {
+  const dispatch = useAppDispatch();
   const [isModalOpen, setIsModalOpen] = useState(false);
   const showModal = () => {
     setIsModalOpen(true);
@@ -18,8 +22,12 @@ const TaskHeader = () => {
 
   const [form] = Form.useForm();
 
-  const onFinish = (value: any) => {
-    console.log("Данные", value);
+  const onFinish = (values: any) => {
+    let time = moment();
+    values["creation_time"] = time.format("YYYY-MM-DDThh:mm:ss");
+    // @ts-ignore
+    dispatch(createTask(values));
+    handleCancel();
   };
   return (
     <>
@@ -82,7 +90,7 @@ const TaskHeader = () => {
             </>
           </Form.Item>
           <Form.Item
-            name="executor"
+            name="author_name"
             rules={[{ required: true, message: "Назначьте исполнителя" }]}
           >
             <>
@@ -92,7 +100,7 @@ const TaskHeader = () => {
                 selectType="authors"
                 placeholder="Выберите исполнителя"
                 setField={(value) => {
-                  form.setFieldValue("executor", value);
+                  form.setFieldValue("author_name", value);
                   form.validateFields();
                 }}
               />
@@ -114,7 +122,7 @@ const TaskHeader = () => {
             </>
           </Form.Item>
           <Form.Item
-            name="state"
+            name="status"
             rules={[{ required: true, message: "Опишите состояние" }]}
           >
             <>
@@ -124,7 +132,7 @@ const TaskHeader = () => {
                 selectType="state"
                 placeholder="Назначьте статус"
                 setField={(value) => {
-                  form.setFieldValue("state", value);
+                  form.setFieldValue("status", value);
                   form.validateFields();
                 }}
               />

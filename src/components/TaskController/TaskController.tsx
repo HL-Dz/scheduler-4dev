@@ -1,17 +1,22 @@
 import React, { FC } from "react";
-import { tasks } from "../../mockData/tasks";
+import { ITask } from "../../mockData/tasks";
+import { useAppDispatch } from "../../hooks/hooks";
+import { addSelectedTask } from "../../store/tasksSlice";
 
 type IProps = {
   controllerStatus: 0 | 1 | 2;
   isActive: number;
+  tasks: ITask[];
 };
 
 const statuses = ["В очереди", "В работе", "Выполнено"];
 
-const TaskController: FC<IProps> = ({ controllerStatus, isActive }) => {
+const TaskController: FC<IProps> = ({ controllerStatus, isActive, tasks }) => {
   const filterStatus = () => {
     return tasks.filter((el) => el.status === controllerStatus);
   };
+
+  const dispath = useAppDispatch();
 
   const cls = controllerStatus === isActive ? "task-controller_active" : "";
   return (
@@ -26,7 +31,11 @@ const TaskController: FC<IProps> = ({ controllerStatus, isActive }) => {
               ? "task__priority_high"
               : "";
           return (
-            <li className="task" key={el.id}>
+            <li
+              className="task"
+              key={el.id}
+              onClick={() => dispath(addSelectedTask(el))}
+            >
               <div className="task__header">
                 <div className={"task__priority " + cls}></div>
                 <div className="task__title">{el.title}</div>
