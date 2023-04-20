@@ -5,6 +5,8 @@ import TaskHeader from "../components/TaskHeader/TaskHeader";
 import { useAppDispatch, useAppSelector } from "../hooks/hooks";
 import { getTasks } from "../store/tasksSlice";
 import ModalController from "../components/Modal/ModalController";
+import ModalForNewTask from "../components/Modal/ModalForNewTask";
+import ModalForUpdateTask from "../components/Modal/ModalForUpdateTask";
 
 const TasksPage = () => {
   const [isActive, setIsActive] = useState(0);
@@ -14,11 +16,6 @@ const TasksPage = () => {
   const dispath = useAppDispatch();
 
   useEffect(() => {
-    // console.log(selectedTask);
-    // let newDate = new Date();
-    // console.log(newDate.getTime());
-    // console.log(newDate.toISOString());
-    // console.log(newDate.toString());
     dispath(getTasks());
   }, [tasks]);
 
@@ -50,7 +47,11 @@ const TasksPage = () => {
           </div>
         </div>
       </main>
-      <ModalController />
+      {/* <ModalController /> */}
+      {modalType === "new_task" && <ModalForNewTask modalType={modalType} />}
+      {modalType === "update_task" && (
+        <ModalForUpdateTask modalType={modalType} selectedTask={selectedTask} />
+      )}
     </div>
   );
 };

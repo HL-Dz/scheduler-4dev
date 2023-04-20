@@ -17,10 +17,6 @@ const TaskController: FC<IProps> = ({ controllerStatus, isActive, tasks }) => {
     return tasks.filter((el) => el.status === controllerStatus);
   };
 
-  // const showModal = () => {
-  //   dispatch(setModalType("update_task"));
-  // };
-
   const cls = controllerStatus === isActive ? "task-controller_active" : "";
   return (
     <div className={"task-controller " + cls}>
@@ -38,9 +34,8 @@ const TaskController: FC<IProps> = ({ controllerStatus, isActive, tasks }) => {
               className="task"
               key={el.id}
               onClick={() => {
-                console.log(el);
-                dispatch(setModalType("update_task"));
                 dispatch(addSelectedTask(el));
+                dispatch(setModalType("update_task"));
               }}
             >
               <div className="task__header">

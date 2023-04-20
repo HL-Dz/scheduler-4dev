@@ -1,30 +1,21 @@
-import React, { useEffect, useState } from "react";
-import { PlusCircleOutlined } from "@ant-design/icons";
 import { Button, Form, Input, Modal, Select } from "antd";
-import SelectControl from "../FormControllers/SelectControl";
-import { authors, duplAuthors } from "../../mockData/authors";
-import TextAreaControl from "../FormControllers/TextAreaControl";
+import { duplAuthors } from "../../mockData/authors";
 import { priority, status } from "../../mockData/tasks";
 import moment from "moment";
-import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
-import {
-  addSelectedTask,
-  createTask,
-  resetSelectedTask,
-  setModalType,
-} from "../../store/tasksSlice";
+import { useAppDispatch } from "../../hooks/hooks";
+import { createTask, setModalType } from "../../store/tasksSlice";
 const { TextArea } = Input;
 
-const ModalController = () => {
+const ModalForNewTask = ({
+  modalType,
+}: {
+  modalType: "new_task" | "update_task";
+}) => {
   const dispatch = useAppDispatch();
-  const modalType = useAppSelector((state) => state.tasks.modalType);
-  const selectedTask = useAppSelector((state) => state.tasks.selectedTask);
-  let isActive = modalType === "new_task" || modalType === "update_task";
-  let newTaskElem = modalType === "new_task";
+
   const [form] = Form.useForm();
 
   const handleCancel = () => {
-    dispatch(resetSelectedTask());
     dispatch(setModalType(null));
     form.resetFields();
   };
@@ -32,42 +23,25 @@ const ModalController = () => {
   const onFinish = (values: any) => {
     let time = moment();
     values["creation_time"] = time.format("YYYY-MM-DDThh:mm:ss");
-    if (modalType === "new_task") {
-      // @ts-ignore
-      // dispatch(createTask(values));
-      // handleCancel();
-      console.log(values);
-    } else if (modalType === "update_task") {
-      // handleCancel();
-      console.log(values);
-    }
-  };
-
-  let task111 = {
-    id: "010",
-    status: 0,
-    priority: 1,
-    title: "Design email templates",
-    description: "Create visually appealing email templates for the website",
-    schedule: {
-      creation_time: "2021-08-01T09:15:00",
-    },
-    author_name: "Emma Anderson",
+    console.log(values);
+    // @ts-ignore
+    dispatch(createTask(values));
+    handleCancel();
   };
 
   return (
     <Modal
-      title={modalType === "new_task" ? "Новая задача" : selectedTask?.title}
-      open={isActive}
+      title={"Новая задача"}
+      open={modalType === "new_task"}
       width={450}
       footer={null}
       onCancel={handleCancel}
+      style={{ top: "20px" }}
     >
       <Form
         name="new_task_form"
         className="login-form"
-        // initialValues={{ remember: true }}
-        initialValues={newTaskElem ? task111 : {}}
+        initialValues={{ remember: true }}
         onFinish={onFinish}
         form={form}
       >
@@ -79,7 +53,6 @@ const ModalController = () => {
               message: "Введите заголовок задания!",
             },
           ]}
-          // className={newTaskElem ? "" : "hedden-el"}
         >
           <>
             <div>Название</div>
@@ -90,20 +63,15 @@ const ModalController = () => {
                 form.setFieldValue("title", e.target.value);
                 form.validateFields();
               }}
-              // defaultValue={modalType === "update_task" ? titleVal : ""}
-              defaultValue={newTaskElem ? task111.title : ""}
             />
           </>
         </Form.Item>
-        {/* <Form.Item
+        <Form.Item
           name="author_name"
-          rules={[
-            { required: newTaskElem && true, message: "Назначьте исполнителя" },
-          ]}
+          rules={[{ required: true, message: "Назначьте исполнителя" }]}
         >
           <>
             <div>Исполниель</div>
-            {<div>{selectedTask?.author_name}</div>}
             <Select
               style={{ width: "100%" }}
               placeholder={"Выберите исполнителя"}
@@ -113,19 +81,15 @@ const ModalController = () => {
                 form.validateFields();
               }}
               options={duplAuthors}
-              // className={newTaskElem ? "" : "hedden-el"}
             />
           </>
         </Form.Item>
         <Form.Item
           name="description"
-          rules={[
-            { required: newTaskElem && true, message: "Опишите задание" },
-          ]}
+          rules={[{ required: true, message: "Опишите задание" }]}
         >
           <>
             <div>Описание задачи</div>
-            {!newTaskElem && <div>{selectedTask?.description}</div>}
             <TextArea
               showCount
               maxLength={300}
@@ -135,7 +99,6 @@ const ModalController = () => {
                 form.validateFields();
               }}
               placeholder={"Опишите задачу"}
-              // className={newTaskElem ? "" : "hedden-el"}
             />
           </>
         </Form.Item>
@@ -149,7 +112,7 @@ const ModalController = () => {
           ]}
         >
           <>
-            <div>Состяние</div>
+            <div>Состояние</div>
             <Select
               style={{ width: "100%" }}
               placeholder={"Назначьте статус"}
@@ -179,7 +142,7 @@ const ModalController = () => {
               options={priority}
             />
           </>
-        </Form.Item> */}
+        </Form.Item>
         <Form.Item>
           <div
             style={{
@@ -212,4 +175,4 @@ const ModalController = () => {
   );
 };
 
-export default ModalController;
+export default ModalForNewTask;
