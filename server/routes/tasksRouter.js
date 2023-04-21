@@ -8,6 +8,6 @@ const tasksController = require("../controllers/tasksController");
 router.get("/", tasksController.getAllTasks);
 router.post("/", jsonParser, tasksController.createTask);
 router.put("/", jsonParser, tasksController.updateTask);
-router.delete("/:id", tasksController.deleteTask);
+router.delete("/:id", jsonParser, tasksController.deleteTask);
 
 module.exports = router;

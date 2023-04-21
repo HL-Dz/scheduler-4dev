@@ -69,6 +69,49 @@ export const createTask = createAsyncThunk(
     }
   }
 );
+export const deleteTaskAsync = createAsyncThunk(
+  "tasks/deleteTaks",
+  async function (id, { rejectWithValue }) {
+    try {
+      const response = await fetch(`http://localhost:5000/api/tasks/${id}`, {
+        method: "DELETE",
+      });
+
+      if (!response.ok) {
+        return rejectWithValue("Can't delete task. Server error.");
+      }
+
+      const data = await response.json();
+      return data;
+    } catch (err: any) {
+      return rejectWithValue(err.message);
+    }
+  }
+);
+
+export const updateTaskAsync = createAsyncThunk(
+  "tasks/updateTaskAsync",
+  async function (task, { rejectWithValue }) {
+    try {
+      const response = await fetch(`http://localhost:5000/api/tasks`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(task),
+      });
+
+      if (!response.ok) {
+        return rejectWithValue("Can't delete task. Server error.");
+      }
+
+      const data = await response.json();
+      return data;
+    } catch (err: any) {
+      return rejectWithValue(err.message);
+    }
+  }
+);
 
 const taskSlice = createSlice({
   name: "tasks",
@@ -96,6 +139,19 @@ const taskSlice = createSlice({
       .addCase(getTasks.fulfilled, (state, action) => {
         state.list = action.payload;
         state.loading = false;
+      })
+      .addCase(deleteTaskAsync.fulfilled, (state, action) => {
+        state.list = state.list.filter((task) => task.id !== action.payload.id);
+      })
+      .addCase(updateTaskAsync.fulfilled, (state, action) => {
+        // @ts-ignore
+        state.list = state.list.map((el) => {
+          if (el.id === action.payload.id) {
+            el = action.payload;
+          } else {
+            return el;
+          }
+        });
       });
   },
 });

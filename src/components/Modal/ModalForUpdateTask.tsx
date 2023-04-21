@@ -2,7 +2,12 @@ import { Button, Form, Input, Modal, Select } from "antd";
 import { duplAuthors } from "../../mockData/authors";
 import { ITask, priority, status } from "../../mockData/tasks";
 import { useAppDispatch } from "../../hooks/hooks";
-import { resetSelectedTask, setModalType } from "../../store/tasksSlice";
+import {
+  deleteTaskAsync,
+  resetSelectedTask,
+  setModalType,
+  updateTaskAsync,
+} from "../../store/tasksSlice";
 const { TextArea } = Input;
 
 type IProps = {
@@ -21,7 +26,11 @@ const ModalForUpdateTask = ({ modalType, selectedTask }: IProps) => {
   };
 
   const onFinish = (values: any) => {
-    console.log(values);
+    values["id"] = selectedTask?.id;
+    values["schedule"] = selectedTask?.schedule;
+    // @ts-ignore
+    dispatch(updateTaskAsync(values));
+    handleCancel();
   };
 
   return (
@@ -31,6 +40,7 @@ const ModalForUpdateTask = ({ modalType, selectedTask }: IProps) => {
       width={450}
       footer={null}
       onCancel={handleCancel}
+      style={{ top: "20px" }}
     >
       <Form
         name="updated_form"
@@ -160,7 +170,13 @@ const ModalForUpdateTask = ({ modalType, selectedTask }: IProps) => {
               style={{ color: "white", backgroundColor: "#dd5a5a" }}
               className="login-form-button"
               size="middle"
-              onClick={handleCancel}
+              onClick={() => {
+                if (selectedTask) {
+                  // @ts-ignore
+                  dispatch(deleteTaskAsync(selectedTask.id));
+                  handleCancel();
+                }
+              }}
             >
               Удалить
             </Button>

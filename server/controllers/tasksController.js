@@ -33,15 +33,8 @@ class TasksController {
   async updateTask(req, res) {
     if (!req.body)
       return res.status(400).send({ message: "Задача не выбрана" });
-    let {
-      id,
-      status,
-      priority,
-      title,
-      description,
-      author_name,
-      schedule: { creation_time },
-    } = req.body;
+    let { id, status, priority, title, description, author_name } = req.body;
+    // let { creation_time } = schedule;
     let content = fs.readFileSync(path.resolve(__dirname, tasksPath), "utf8");
     let tasks = JSON.parse(content);
 
@@ -52,12 +45,13 @@ class TasksController {
       title,
       description,
       author_name,
-      schedule: { creation_time },
+      // schedule: { creation_time },
     };
 
     let updatedTasks = tasks.map((task) => {
       if (task.id === id) {
         return updatedTask;
+        // task = updatedTask;
       } else {
         return task;
       }
@@ -67,8 +61,7 @@ class TasksController {
     res.send(updatedTask);
   }
   async deleteTask(req, res) {
-    if (!req.params)
-      return res.status(404).send({ message: "Задача не найдена" });
+    if (!req.params) return res.status(404).send({ message: "Ошибка" });
     let id = req.params.id;
     let content = fs.readFileSync(path.resolve(__dirname, tasksPath), "utf8");
     const tasks = JSON.parse(content);

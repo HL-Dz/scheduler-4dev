@@ -14,7 +14,7 @@ const statuses = ["В очереди", "В работе", "Выполнено"];
 const TaskController: FC<IProps> = ({ controllerStatus, isActive, tasks }) => {
   const dispatch = useAppDispatch();
   const filterStatus = () => {
-    return tasks.filter((el) => el.status === controllerStatus);
+    return tasks.filter((el) => el?.status === controllerStatus);
   };
 
   const cls = controllerStatus === isActive ? "task-controller_active" : "";
