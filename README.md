@@ -12,6 +12,7 @@
 ![React](https://img.shields.io/badge/-React-090909?style=for-the-badge&logo=React&logoColor=03c2e5)
 ![Redux](https://img.shields.io/badge/-Redux-090909?style=for-the-badge&logo=redux&logoColor=7b3ebc)
 ![Typescript](https://img.shields.io/badge/-TypeScript-090909?style=for-the-badge&logo=TypeScript&logoColor=2f74c0)
+![NodeJS](https://img.shields.io/badge/-NodeJs-090909?style=for-the-badge&logo=nodejs&logoColor=2f74c0)
 
 ### Установка
 
@@ -53,11 +54,11 @@ npm run dev
 
 ![Задачи](./src/images/tasks.png)
 
-**3** Добавлени новой задачи
+**3** Добавление новой задачи
 
 ![Новая задача](./src/images/new-task.png)
 
-**4**Редактирование задачи
+**4** Редактирование задачи
 
 ![Редактирование задачи](./src/images/update-task.png)
 
