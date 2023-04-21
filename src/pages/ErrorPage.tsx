@@ -1,6 +1,16 @@
 import { Button } from "antd";
 import { WarningOutlined } from "@ant-design/icons";
+import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "../hooks/hooks";
+import { resetError } from "../store/authSlice";
 const ErrorPage = () => {
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+  const goToMainPage = () => {
+    dispatch(resetError());
+    navigate("/");
+  };
+
   return (
     <div className="error-page">
       <div className="error-box">
@@ -16,7 +26,15 @@ const ErrorPage = () => {
             quam aut eum tempore alias. Lorem ipsum dolor sit amet consectetur
             adipisicing elit. Optio non quam aut eum tempore alias.
           </div>
-          <Button type="primary" className="error-box__btn" size="large">
+          <Button
+            type="primary"
+            htmlType="button"
+            className="error-box__btn"
+            size="large"
+            onClick={() => {
+              goToMainPage();
+            }}
+          >
             Назад
           </Button>
         </div>

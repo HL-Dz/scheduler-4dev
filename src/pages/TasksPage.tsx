@@ -7,17 +7,23 @@ import { getTasks } from "../store/tasksSlice";
 import ModalController from "../components/Modal/ModalController";
 import ModalForNewTask from "../components/Modal/ModalForNewTask";
 import ModalForUpdateTask from "../components/Modal/ModalForUpdateTask";
+import { Navigate } from "react-router-dom";
 
 const TasksPage = () => {
   const [isActive, setIsActive] = useState(0);
   const tasks = useAppSelector((state) => state.tasks.list);
   const selectedTask = useAppSelector((state) => state.tasks.selectedTask);
+  const token = useAppSelector((state) => state.auth.token);
   const modalType = useAppSelector((state) => state.tasks.modalType);
   const dispath = useAppDispatch();
 
   useEffect(() => {
     dispath(getTasks());
   }, [tasks]);
+
+  if (!token) {
+    return <Navigate replace to="/error" />;
+  }
 
   return (
     <div className="tasks-page">

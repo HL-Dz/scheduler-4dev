@@ -1,12 +1,22 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { LockOutlined, UserOutlined } from "@ant-design/icons";
 import { Button, Form, Input } from "antd";
 import "./auth-form.scss";
+import { useAppDispatch, useAppSelector } from "../../hooks/hooks";
+import { initialApp } from "../../store/authSlice";
 
 const AuthForm = () => {
+  const dispatch = useAppDispatch();
+  // const token = useAppSelector((state) => state.auth.token);
   const onFinish = (values: any) => {
-    console.log("Received values of form: ", values);
+    console.log(values);
+    // @ts-ignore
+    dispatch(initialApp(values));
   };
+
+  // useEffect(() => {
+  //   console.log(token);
+  // }, [token]);
 
   return (
     <div className="auth-form">
