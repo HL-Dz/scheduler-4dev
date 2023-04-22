@@ -4,6 +4,7 @@ import { ITask, priority, status } from "../../mockData/tasks";
 import { useAppDispatch } from "../../hooks/hooks";
 import {
   deleteTaskAsync,
+  getTasks,
   resetSelectedTask,
   setModalType,
   updateTaskAsync,
@@ -25,11 +26,12 @@ const ModalForUpdateTask = ({ modalType, selectedTask }: IProps) => {
     form.resetFields();
   };
 
-  const onFinish = (values: any) => {
+  const onFinish = async (values: any) => {
     values["id"] = selectedTask?.id;
     values["schedule"] = selectedTask?.schedule;
     // @ts-ignore
-    dispatch(updateTaskAsync(values));
+    await dispatch(updateTaskAsync(values));
+    dispatch(getTasks());
     handleCancel();
   };
 

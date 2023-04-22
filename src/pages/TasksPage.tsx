@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import TaskController from "../components/TaskController/TaskController";
 import ControllerNavigaion from "../components/ControllerNavigaion/ControllerNavigaion";
 import TaskHeader from "../components/TaskHeader/TaskHeader";
@@ -15,11 +15,11 @@ const TasksPage = () => {
   const selectedTask = useAppSelector((state) => state.tasks.selectedTask);
   const token = useAppSelector((state) => state.auth.token);
   const modalType = useAppSelector((state) => state.tasks.modalType);
-  const dispath = useAppDispatch();
+  const dispatch = useAppDispatch();
 
   useEffect(() => {
-    dispath(getTasks());
-  }, [tasks]);
+    dispatch(getTasks());
+  }, []);
 
   if (!token) {
     return <Navigate replace to="/error" />;
