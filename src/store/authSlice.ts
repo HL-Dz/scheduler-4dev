@@ -31,8 +31,9 @@ export const initialApp = createAsyncThunk(
         body: JSON.stringify(obj),
       });
       if (!response.ok) {
-        throw new Error("Server Error!");
-        // dispatch()
+        let errorResul = await response
+          .json()
+          .then((data) => console.log(data));
       }
 
       const data = await response.json();
@@ -54,6 +55,10 @@ const authSlice = createSlice({
     setError(state, action) {},
     resetError(state) {
       state.error = false;
+    },
+    logout(state) {
+      localStorage.removeItem("token");
+      state.token = null;
     },
   },
   extraReducers: (builder) => {
@@ -77,6 +82,6 @@ const authSlice = createSlice({
   },
 });
 
-export const { resetError } = authSlice.actions;
+export const { resetError, logout } = authSlice.actions;
 
 export default authSlice.reducer;
