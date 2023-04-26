@@ -22,7 +22,8 @@ const ModalForNewTask = ({
 
   const onFinish = (values: any) => {
     let time = moment();
-    values["creation_time"] = time.format("YYYY-MM-DDThh:mm:ss");
+    // values["creation_time"] = time.format("YYYY-MM-DDThh:mm:ss");
+    values["creation_time"] = time.format().slice(0, -6);
     console.log(values);
     // @ts-ignore
     dispatch(createTask(values));
